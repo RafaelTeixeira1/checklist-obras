@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
-const { testDatabaseConnection } = require("./config/db");
+const { testDatabaseConnection, ensureObrasTable } = require("./config/db");
 
 const app = express();
 const PORT = process.env.BACKEND_PORT || 3000;
@@ -33,7 +33,9 @@ app.get("/health/db", async (req, res) => {
 async function startServer() {
   try {
     await testDatabaseConnection();
+    await ensureObrasTable();
     console.log("Conexao com MySQL estabelecida.");
+    console.log("Tabela 'obras' verificada/criada com sucesso.");
 
     app.listen(PORT, () => {
       console.log(`Servidor rodando na porta ${PORT}`);
