@@ -20,7 +20,21 @@ async function testDatabaseConnection() {
   }
 }
 
+async function ensureObrasTable() {
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS obras (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      nome VARCHAR(150) NOT NULL,
+      endereco VARCHAR(255) NOT NULL,
+      status VARCHAR(50) NOT NULL DEFAULT 'ativa',
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `);
+}
+
 module.exports = {
   pool,
   testDatabaseConnection,
+  ensureObrasTable,
 };
