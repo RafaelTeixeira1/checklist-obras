@@ -5,6 +5,7 @@ const {
   testDatabaseConnection,
   ensureObrasTable,
   ensureModelosChecklistTable,
+  ensureItensChecklistTable,
 } = require("./config/db");
 
 const app = express();
@@ -39,8 +40,9 @@ async function startServer() {
     await testDatabaseConnection();
     await ensureObrasTable();
     await ensureModelosChecklistTable();
+    await ensureItensChecklistTable();
     console.log("Conexao com MySQL estabelecida.");
-    console.log("Tabelas 'obras' e 'modelos_checklist' verificadas/criadas com sucesso.");
+    console.log("Tabelas 'obras', 'modelos_checklist' e 'itens_checklist' verificadas/criadas com sucesso.");
 
     app.listen(PORT, () => {
       console.log(`Servidor rodando na porta ${PORT}`);

@@ -45,9 +45,28 @@ async function ensureModelosChecklistTable() {
   `);
 }
 
+async function ensureItensChecklistTable() {
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS itens_checklist (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      modelo_id INT NOT NULL,
+      descricao VARCHAR(255) NOT NULL,
+      ordem INT NOT NULL DEFAULT 0,
+      obrigatorio TINYINT(1) NOT NULL DEFAULT 1,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+      CONSTRAINT fk_itens_modelo
+        FOREIGN KEY (modelo_id)
+        REFERENCES modelos_checklist (id)
+        ON DELETE CASCADE
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `);
+}
+
 module.exports = {
   pool,
   testDatabaseConnection,
   ensureObrasTable,
   ensureModelosChecklistTable,
+  ensureItensChecklistTable,
 };
