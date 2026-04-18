@@ -86,6 +86,30 @@ async function ensureInspecoesTable() {
   `);
 }
 
+async function ensureRespostasInspecaoTable() {
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS respostas_inspecao (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      inspecao_id INT NOT NULL,
+      item_id INT NOT NULL,
+      status VARCHAR(20) NOT NULL DEFAULT 'nao_aplicavel',
+      observacao TEXT,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+      CONSTRAINT fk_respostas_inspecao
+        FOREIGN KEY (inspecao_id)
+        REFERENCES inspecoes (id)
+        ON DELETE CASCADE,
+      CONSTRAINT fk_respostas_item
+        FOREIGN KEY (item_id)
+        REFERENCES itens_checklist (id)
+        ON DELETE CASCADE,
+      CONSTRAINT uq_resposta_item_por_inspecao
+        UNIQUE (inspecao_id, item_id)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `);
+}
+
 module.exports = {
   pool,
   testDatabaseConnection,
@@ -93,4 +117,5 @@ module.exports = {
   ensureModelosChecklistTable,
   ensureItensChecklistTable,
   ensureInspecoesTable,
+  ensureRespostasInspecaoTable,
 };
