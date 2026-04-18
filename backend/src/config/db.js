@@ -33,8 +33,21 @@ async function ensureObrasTable() {
   `);
 }
 
+async function ensureModelosChecklistTable() {
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS modelos_checklist (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      nome VARCHAR(150) NOT NULL,
+      descricao TEXT,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `);
+}
+
 module.exports = {
   pool,
   testDatabaseConnection,
   ensureObrasTable,
+  ensureModelosChecklistTable,
 };
