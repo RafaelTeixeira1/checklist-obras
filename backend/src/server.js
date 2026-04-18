@@ -1,7 +1,15 @@
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
-const { testDatabaseConnection } = require("./config/db");
+const {
+  testDatabaseConnection,
+  ensureObrasTable,
+  ensureModelosChecklistTable,
+  ensureItensChecklistTable,
+  ensureInspecoesTable,
+  ensureRespostasInspecaoTable,
+} = require("./config/db");
+const apiRoutes = require("./routes/api");
 
 const app = express();
 const PORT = process.env.BACKEND_PORT || 3000;
@@ -30,10 +38,19 @@ app.get("/health/db", async (req, res) => {
   }
 });
 
+// Registrar rotas da API
+app.use("/api", apiRoutes);
+
 async function startServer() {
   try {
     await testDatabaseConnection();
+    await ensureObrasTable();
+    await ensureModelosChecklistTable();
+    await ensureItensChecklistTable();
+    await ensureInspecoesTable();
+    await ensureRespostasInspecaoTable();
     console.log("Conexao com MySQL estabelecida.");
+    console.log("Tabelas 'obras', 'modelos_checklist', 'itens_checklist', 'inspecoes' e 'respostas_inspecao' verificadas/criadas com sucesso.");
 
     app.listen(PORT, () => {
       console.log(`Servidor rodando na porta ${PORT}`);
