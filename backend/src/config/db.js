@@ -63,10 +63,34 @@ async function ensureItensChecklistTable() {
   `);
 }
 
+async function ensureInspecoesTable() {
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS inspecoes (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      obra_id INT NOT NULL,
+      modelo_id INT NOT NULL,
+      data_inspecao DATE NOT NULL,
+      status VARCHAR(50) NOT NULL DEFAULT 'pendente',
+      observacoes TEXT,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+      CONSTRAINT fk_inspecoes_obra
+        FOREIGN KEY (obra_id)
+        REFERENCES obras (id)
+        ON DELETE CASCADE,
+      CONSTRAINT fk_inspecoes_modelo
+        FOREIGN KEY (modelo_id)
+        REFERENCES modelos_checklist (id)
+        ON DELETE RESTRICT
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `);
+}
+
 module.exports = {
   pool,
   testDatabaseConnection,
   ensureObrasTable,
   ensureModelosChecklistTable,
   ensureItensChecklistTable,
+  ensureInspecoesTable,
 };
