@@ -9,6 +9,7 @@ const {
   ensureInspecoesTable,
   ensureRespostasInspecaoTable,
 } = require("./config/db");
+const apiRoutes = require("./routes/api");
 
 const app = express();
 const PORT = process.env.BACKEND_PORT || 3000;
@@ -36,6 +37,9 @@ app.get("/health/db", async (req, res) => {
     });
   }
 });
+
+// Registrar rotas da API
+app.use("/api", apiRoutes);
 
 async function startServer() {
   try {
