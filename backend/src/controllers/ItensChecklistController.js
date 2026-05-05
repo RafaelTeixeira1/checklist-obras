@@ -4,7 +4,11 @@ const { pool } = require("../config/db");
 exports.getItens = async (req, res) => {
   try {
     const [itens] = await pool.query("SELECT * FROM itens_checklist");
-    res.status(200).json(itens);
+    const normalized = itens.map(row => ({
+      ...row,
+      obrigatorio: Boolean(row.obrigatorio),
+    }));
+    res.status(200).json(normalized);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -18,7 +22,8 @@ exports.getItem = async (req, res) => {
     if (item.length === 0) {
       return res.status(404).json({ error: "Item não encontrado" });
     }
-    res.status(200).json(item[0]);
+    const normalized = { ...item[0], obrigatorio: Boolean(item[0].obrigatorio) };
+    res.status(200).json(normalized);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -32,7 +37,11 @@ exports.getItensPorModelo = async (req, res) => {
       "SELECT * FROM itens_checklist WHERE modelo_id = ? ORDER BY ordem",
       [modeloId]
     );
-    res.status(200).json(itens);
+    const normalized = itens.map(row => ({
+      ...row,
+      obrigatorio: Boolean(row.obrigatorio),
+    }));
+    res.status(200).json(normalized);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -45,16 +54,18 @@ exports.createItem = async (req, res) => {
     if (!modelo_id || !descricao) {
       return res.status(400).json({ error: "modelo_id e descricao são obrigatórios" });
     }
+    const obrig = obrigatorio === undefined ? 1 : (obrigatorio ? 1 : 0);
+    const ord = ordem === undefined ? 0 : ordem;
     const [result] = await pool.query(
       "INSERT INTO itens_checklist (modelo_id, descricao, ordem, obrigatorio) VALUES (?, ?, ?, ?)",
-      [modelo_id, descricao, ordem || 0, obrigatorio || false]
+      [modelo_id, descricao, ord, obrig]
     );
     res.status(201).json({ 
       id: result.insertId, 
       modelo_id, 
       descricao, 
-      ordem: ordem || 0, 
-      obrigatorio: obrigatorio || false 
+      ordem: ord, 
+      obrigatorio: Boolean(obrig)
     });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -79,7 +90,7 @@ exports.updateItem = async (req, res) => {
     }
     if (obrigatorio !== undefined) {
       updates.push("obrigatorio = ?");
-      values.push(obrigatorio);
+      values.push(obrigatorio ? 1 : 0);
     }
 
     if (updates.length === 0) {
