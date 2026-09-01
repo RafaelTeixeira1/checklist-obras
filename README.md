@@ -1,55 +1,43 @@
-# 🏗️ CheckObra - Sistema de Checklist de Inspeção de Qualidade
+# CheckObra — Protótipo inicial do PadrãoCerto
 
-## 📌 Descrição
+> **Status:** repositório histórico / protótipo descontinuado.
+>
+> A evolução deste projeto está disponível no repositório **[PadrãoCerto](https://github.com/RafaelTeixeira1/padraocerto)**, que concentra a implementação atual, documentação técnica e ambiente Docker do sistema.
 
-O **CheckObra** é um sistema web desenvolvido para auxiliar no controle de qualidade em obras da construção civil, permitindo o registro e acompanhamento de inspeções através de checklists padronizados.
+## Sobre este repositório
 
-O sistema possibilita o cadastro de obras, criação de modelos de checklist e realização de inspeções, onde cada item pode ser avaliado como conforme ou não conforme, gerando um resultado final com base nas respostas.
+O CheckObra foi uma etapa inicial de desenvolvimento de um sistema web para apoiar inspeções de qualidade na construção civil por meio de checklists padronizados.
 
----
+Durante esta fase foram explorados conceitos de frontend com Vue.js, backend com Express, integração por API REST, persistência de dados e organização do desenvolvimento com Git e GitHub.
 
-## 🎯 Objetivo
+O histórico de branches e commits deste repositório foi mantido como registro da evolução técnica do projeto. A continuidade do desenvolvimento ocorreu no **PadrãoCerto**.
 
-Desenvolver um sistema funcional utilizando frameworks modernos, aplicando conceitos de:
+## Escopo originalmente planejado
 
-- Desenvolvimento Frontend com Vue.js
-- Desenvolvimento Backend com Express
-- Integração via API REST
-- Organização de projeto com boas práticas
-- Controle de tarefas com Kanban (GitHub Projects)
+- cadastro e gerenciamento de obras;
+- criação de modelos de checklist;
+- inclusão e remoção de itens de verificação;
+- execução de inspeções;
+- classificação de itens como conforme ou não conforme;
+- cálculo do percentual de conformidade;
+- acompanhamento do status das inspeções;
+- dashboard com indicadores do projeto.
 
----
+## Tecnologias exploradas
 
-## 🛠️ Tecnologias Utilizadas
+| Camada | Tecnologias |
+|---|---|
+| Frontend | Vue.js, Vue Router, Axios |
+| Backend | Node.js, Express.js |
+| Integração | API REST |
+| Desenvolvimento | Git, GitHub, GitHub Projects, Docker |
 
-### Frontend
-- Vue.js
-- Vue Router
-- Axios
+## Continuidade do projeto
 
-### Backend
-- Node.js
-- Express
+O **PadrãoCerto** consolidou e expandiu esta proposta, incorporando frontend e backend integrados, persistência com MySQL e Sequelize, execução por Docker Compose, gerenciamento de obras e checklists, inspeções e dashboard.
 
-### Ferramentas
-- Git e GitHub
-- GitHub Projects (Kanban)
-- Postman / Insomnia
+➡️ **Projeto atual:** [github.com/RafaelTeixeira1/padraocerto](https://github.com/RafaelTeixeira1/padraocerto)
 
----
+## Observação
 
-## ⚙️ Funcionalidades
-
-- Cadastro de obras
-- Listagem, edição e exclusão de obras
-- Cadastro de modelos de checklist
-- Adição e remoção de itens no checklist
-- Criação de inspeções
-- Avaliação de itens (conforme / não conforme)
-- Cálculo de percentual de conformidade
-- Definição de status da inspeção
-- Dashboard com resumo das inspeções
-
----
-
-## 🧱 Estrutura do Projeto
+Este repositório permanece público para preservar o histórico do processo de desenvolvimento. Para avaliação técnica, execução da aplicação ou consulta à versão mais completa, utilize o repositório PadrãoCerto.
